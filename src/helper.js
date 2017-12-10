@@ -44,8 +44,13 @@ function isAdmin(user) {
 }
 
 function checkOrigin(origin, callback) {
+    // origin is localhost
+    if (typeof origin === 'undefined') {
+        return callback(null, true);
+    }
     // origin is allowed
-    if (typeof origin === 'undefined' || `.${url.parse(origin).hostname}`.endsWith(`.${schnack_domain}`)) {
+    if (config.cors.whitelist.indexOf(origin) !== -1) {
+    // if (`.${url.parse(origin).hostname}`.endsWith(`.${schnack_domain}`)) {
         return callback(null, true);
     }
 
